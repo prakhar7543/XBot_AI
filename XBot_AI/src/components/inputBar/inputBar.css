@@ -1,0 +1,38 @@
+.inpContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  /* align-items: baseline; */
+  justify-content: space-between;
+  margin-top: 40px;
+  align-items: center;
+}
+
+input {
+  width: 830px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+button {
+  width: 33px;
+  height: 23px;
+  background-color: #d7c7f4;
+}
+
+.btn {
+  display: flex;
+  /* width: 115px; */
+  justify-content: space-around;
+  align-items: center;
+  width: 130px;
+}
+
+.btn button {
+  width: 60px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
