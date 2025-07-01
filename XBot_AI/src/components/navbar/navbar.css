@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
+}
+
+.menuIcon {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .menuIcon {
+    display: block;
+    width: 23px;
+    height: 15px;
+  }
+}
