@@ -4,7 +4,7 @@
   flex-direction: row;
   /* align-items: baseline; */
   justify-content: space-between;
-  margin-top: 40px;
+  margin-top: 55px;
   align-items: center;
 }
 
@@ -12,12 +12,16 @@ input {
   width: 830px;
   height: 40px;
   border-radius: 5px;
+  padding-left: 15px;
 }
+
+
 
 button {
   width: 33px;
   height: 23px;
   background-color: #d7c7f4;
+  cursor: pointer;
 }
 
 .btn {
@@ -35,4 +39,17 @@ button {
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+}
+
+
+@media (max-width: 600px) {
+  
+    input{
+      width: 60vw;
+    }
+
+    .inpContainer{
+      display: flex;
+      justify-content: space-around;
+    }
 }

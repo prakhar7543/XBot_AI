@@ -8,6 +8,7 @@
   align-items: flex-start;
   justify-content: center;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .card h2 {
@@ -35,4 +36,30 @@
 
 .cardContent {
   margin-top: 55px;
+}
+
+
+@media (max-width: 600px) {
+    .cardsContainer{
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cardContainer{
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      /* background-image: linear-gradient(to bottom, #e9ddf7, #f1ecec); */
+    }
+
+    .card{
+      width: 60vw;
+      /* text-align: center; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 }

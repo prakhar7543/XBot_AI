@@ -13,14 +13,16 @@ import InputBar from "../inputBar/inputBar";
 
 export default function HomePage() {
   return (
-    <Grid container sx={{ width: "100vw" }}>
+    <Grid container sx={{ width: "100vw", height: '100vh',display: 'flex', flexDirection: 'column'  }}>
       {/* <------------sidebar---------------> */}
       <Grid
         item
-        xs={12}
+        xs={0}
         md={3}
         lg={3}
-        sx={{ backgroundColor: "white", height: "10vh", width: "25vw" }}
+        sx={{ backgroundColor: "white", height: "100vh", display: {xs: 'none', md: 'block'}, 
+        width: '25vw' 
+      }}
       >
         <div className="sideNavbar">
           <div style={{ width: "50px", height: "50px", paddingLeft: "8px" }}>
@@ -46,6 +48,7 @@ export default function HomePage() {
                 objectPosition: "center",
                 height: "100%",
                 width: "100%",
+                 cursor: 'pointer',
               }}
             />
           </div>
@@ -61,7 +64,8 @@ export default function HomePage() {
         sx={{
           background: 'linear-gradient(to bottom, #e9ddf7, #f1ecec)',
           height: "100vh",
-          width: "75vw",
+          width: {xs: '100vw', md: '75vw', lg: '75vw'},
+          // background: {xs: 'linear-gradient(to bottom, #e9ddf7, #f1ecec)'}
         }}
       >
         <Navbar />
@@ -87,7 +91,8 @@ export default function HomePage() {
             <Cards />
           </div>
 
-          <div className="inputContainer">{/* <-------------------input------------------> */}
+          <div className="inputContainer">
+            {/* <-------------------input------------------> */}
             <InputBar/>
           </div>
         </div>
