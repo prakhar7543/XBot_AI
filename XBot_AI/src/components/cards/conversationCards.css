@@ -1,21 +1,29 @@
 .conversationContainer {
   width: 90%;
   height: 455px;
-  background-image: linear-gradient(to bottom, #bfa9d9, #d5d1d1);
+  /* background-image: linear-gradient(to bottom, #bfa9d9, #d5d1d1); */
+  background-color: #9e9e9e40;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding-top: 15px;
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 8px;
 }
 
 .conversationCard {
   width: 90%;
   height: 105px;
-  background-color: lightgrey;
+  /* background-color: lightgrey; */
   border-radius: 20px;
   display: flex;
   align-items: center;
+  /* background-image: linear-gradient(to bottom, #bfa9d9, #d5d1d1); */
+  background-color: #bfa9d9;
 }
 
 .chat {

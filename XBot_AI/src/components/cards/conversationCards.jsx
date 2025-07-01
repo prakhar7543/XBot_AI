@@ -1,30 +1,38 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import './conversationCards.css';
 import userPic from '../../assets/userPic.png';
 import sideNavbarImg from '../../assets/sideNavbarImg.png';
 
 
-export default function Conversation({dummyData, time}){
+export default function Conversation({time, chat}){
 
-   
+   let endRef = useRef();
+
+    useEffect(() => {
+        endRef.current?.scrollIntoView({behavior: 'smooth'});
+    }, [chat]);
 
     return(
         <div className="conversationContainer">
-            <div className="conversationCard">
+
+            {chat.map((msg, index) => (
+            <div key={index} className="conversationCard">
                 <div className="profilePic">
-              <img src={userPic} alt="profile" /> 
+              <img src={msg.sender === 'You'? userPic : sideNavbarImg} alt="profile" /> 
                 </div>
 
               <div className="chat">
                 <div style={{paddingTop: '10px'}}>
-                    <p style={{fontWeight: '600', fontSize: '18px'}}>username</p>
-                    <p>hiii..</p>
+                    <p style={{fontWeight: '600', fontSize: '18px'}}>{msg.sender}</p>
+                    <p>{msg.text}</p>
                 </div>
                 <div>
-                    <p style={{color: '#0000009E', paddingBottom: '5px'}}>{time}</p>
+                    <p style={{color: '#0000009E', paddingBottom: '5px'}}>{msg.time}</p>
                 </div>
                 </div> 
             </div>
+            ))}
+            <div ref={endRef}></div>
         </div>
     )
 }

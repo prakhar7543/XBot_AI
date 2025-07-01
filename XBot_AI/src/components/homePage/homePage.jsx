@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 // import { styled } from '@mui/material/styles';
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -78,7 +78,24 @@ let dummyData = [
 
 export default function HomePage() {
   let [openChat, setOpenChat] = useState(false);
-  let [time, setTime] = useState('');
+  let [time, setTime] = useState("");
+  let [chat, setChat] = useState([]);
+
+  let chatRef = useRef();
+
+  useEffect(() => {
+    let handleClickOutside = (e) => {
+      if (chatRef.current && !chatRef.current.contains(e.target)) {
+        setOpenChat(false);
+        setTime("");
+        setChat([]);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <Grid
@@ -176,24 +193,27 @@ export default function HomePage() {
             </div>
 
             <div className="cardContent">
-
               {/* <-----------------------cards--------------------------> */}
               <Cards />
             </div>
 
             <div className="inputContainer">
-
               {/* <-------------------input------------------> */}
-              <InputBar setOpenChat={setOpenChat} setTime={setTime}/>
+              <InputBar
+                setOpenChat={setOpenChat}
+                setTime={setTime}
+                chat={chat}
+                setChat={setChat}
+                dummyData={dummyData}
+              />
             </div>
           </div>
         ) : (
-          <div className="parentConversationContainer">
-            <Conversation dummyData={dummyData} time={time} />
+          <div className="parentConversationContainer" ref={chatRef} style={{overflowY: 'auto'}}>
+            <Conversation dummyData={dummyData} time={time} chat={chat} />
             <div className="inputContainer">
-
               {/* <-------------------input------------------> */}
-              <InputBar  />
+              <InputBar />
             </div>
           </div>
         )}

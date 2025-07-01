@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import "./inputBar.css";
 
-export default function InputBar({ setOpenChat, setTime }) {
+export default function InputBar({
+  setOpenChat,
+  setTime,
+  chat,
+  setChat,
+  dummyData,
+}) {
   let [text, setText] = useState("");
-  // let [openChat, setOpenChat] = useState(false);
 
   function getCurrentTime() {
     let now = new Date();
@@ -26,6 +31,25 @@ export default function InputBar({ setOpenChat, setTime }) {
       let time = getCurrentTime();
       setTime(time);
       setOpenChat(true);
+
+      let updated = [...chat, { sender: "You", text: text.trim(), time: time }];
+
+      let found = dummyData.find((item) => {
+        text.toLowerCase().includes(item.question.toLowerCase());
+      });
+
+      if (found) {
+        updated.push({ sender: "Soul AI", text: found.response, time: time });
+      } else {
+        updated.push({
+          sender: "Soul AI",
+          text: "Sorry, Did not understand your query!",
+          time: time,
+        });
+      }
+
+      setChat(updated);
+      setText("");
     }
   };
 
