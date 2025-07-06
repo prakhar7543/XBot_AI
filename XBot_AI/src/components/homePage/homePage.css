@@ -57,4 +57,8 @@
     /* background-image: linear-gradient(to bottom, #e9ddf7, #f1ecec); */
     padding-bottom: 25px;
   }
+
+  .parentConversationContainer{
+    /* background-image: linear-gradient(to bottom, #bfa9d9, #d5d1d1); */
+  }
 }

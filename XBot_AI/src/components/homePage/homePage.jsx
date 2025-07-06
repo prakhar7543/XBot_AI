@@ -209,11 +209,21 @@ export default function HomePage() {
             </div>
           </div>
         ) : (
-          <div className="parentConversationContainer" ref={chatRef} style={{overflowY: 'auto'}}>
+          <div
+            className="parentConversationContainer"
+            ref={chatRef}
+            style={{ overflowY: "auto" }}
+          >
             <Conversation dummyData={dummyData} time={time} chat={chat} />
             <div className="inputContainer">
               {/* <-------------------input------------------> */}
-              <InputBar />
+              <InputBar
+                setOpenChat={setOpenChat}
+                setTime={setTime}
+                chat={chat}
+                setChat={setChat}
+                dummyData={dummyData}
+              />
             </div>
           </div>
         )}

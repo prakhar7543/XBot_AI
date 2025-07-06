@@ -27,7 +27,7 @@ export default function InputBar({
   };
 
   let handleOpenChat = () => {
-    if (text) {
+    if (text.trim()) {
       let time = getCurrentTime();
       setTime(time);
       setOpenChat(true);
@@ -35,7 +35,7 @@ export default function InputBar({
       let updated = [...chat, { sender: "You", text: text.trim(), time: time }];
 
       let found = dummyData.find((item) => {
-        text.toLowerCase().includes(item.question.toLowerCase());
+       return text.toLowerCase().includes(item.question.toLowerCase());
       });
 
       if (found) {
