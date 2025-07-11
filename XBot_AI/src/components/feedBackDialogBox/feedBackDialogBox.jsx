@@ -26,8 +26,10 @@ export default function FeedBackDialogBox({
     setOpenFeedbackBox(false);
   };
 
-  let handleSubmit = () => {};
-
+  let handleSubmit = () => {
+    setOpenFeedbackBox(false);
+  };
+  
   let handleChange = (e) => {
     let text = e.target.value;
     setFeedbackOpinion(text);

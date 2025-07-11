@@ -6,8 +6,14 @@ import thumbsUp from "../../assets/thumbsUp.png";
 import thumbsDown from "../../assets/thumbsDown.png";
 import soulAi from "../../assets/soulAi.png";
 import FeedBackDialogBox from "../feedBackDialogBox/feedBackDialogBox";
+import FeedbackRating from "../feedBackDialogBox/ratings";
 
-export default function Conversation({ time, chat, setOpenFeedbackBox,  openFeedbackBox}) {
+export default function Conversation({
+  time,
+  chat,
+  openFeedbackBox,
+  setOpenFeedbackBox,
+}) {
   // let [openFeedbackBox, setOpenFeedbackBox] = useState(false);
   let [feedback, setFeedback] = useState({});
   let [feedbackOpinion, setFeedbackOpinion] = useState("");
@@ -20,22 +26,22 @@ export default function Conversation({ time, chat, setOpenFeedbackBox,  openFeed
 
   let handleThumbsDownClick = (index) => {
     setFeedback((prev) => {
-      if(feedback[index] === 'up'){
-      return { ...prev, [index]: null }}
-      else{
-        return { ...prev, [index]: 'down' }}
-      
+      if (feedback[index] === "up") {
+        return { ...prev, [index]: null };
+      } else {
+        return { ...prev, [index]: "down" };
+      }
     });
     setOpenFeedbackBox(true);
   };
 
   let handleThumbsUpClick = (index) => {
     setFeedback((prev) => {
-      if(feedback[index] === 'up'){
-      return { ...prev, [index]: null }}
-      else{
-        return { ...prev, [index]: 'up' }}
-      
+      if (feedback[index] === "up") {
+        return { ...prev, [index]: null };
+      } else {
+        return { ...prev, [index]: "up" };
+      }
     });
   };
 
@@ -63,29 +69,59 @@ export default function Conversation({ time, chat, setOpenFeedbackBox,  openFeed
                 <p style={{ color: "#0000009E", paddingBottom: "5px" }}>
                   {msg.time}
                 </p>
-                {msg.sender !== "You" && (
-                  <div
-                    className="thumbsUp"
-                    style={{ height: "16px", width: "43px" }}
-                  >
-                    <img
-                      src={thumbsUp}
-                      alt="up"
+
+                {msg.sender !== "You" &&
+                  (!feedbackOpinion ? (
+                    <div
+                      className="thumbsUp"
+                      style={{ height: "16px", width: "43px" }}
+                    >
+                      <img
+                        src={thumbsUp}
+                        alt="up"
+                        style={{
+                          pointerEvents: "all",
+                          backgroundColor:
+                            feedback && feedback[index] === "up"
+                              ? "#878181"
+                              : "transparent",
+                        }}
+                        onClick={() => handleThumbsUpClick(index)}
+                      />
+                      <img
+                        src={thumbsDown}
+                        alt="down"
+                        style={{ pointerEvents: "all" }}
+                        onClick={() => handleThumbsDownClick(index)}
+                      />
+                    </div>
+                  ) : (
+                    <div
+                      className="ratings"
                       style={{
-                        pointerEvents: "all",
-                        backgroundColor:
-                          feedback && feedback[index] === "up" ? "#878181" : "transparent",
+                        height: "80px",
+                        display: "flex",
+                        justifyContent: "end",
+                        flexDirection: 'column' ,
                       }}
-                      onClick={() => handleThumbsUpClick(index)}
-                    />
-                    <img
-                      src={thumbsDown}
-                      alt="down"
-                      style={{ pointerEvents: "all" }}
-                      onClick={() => handleThumbsDownClick(index)}
-                    />
-                  </div>
-                )}
+                    >
+                      <div>
+                        <FeedbackRating
+                          style={{ width: "70px", height: "70px" }}
+                        />
+                      </div>
+                      <div
+                        className="comments"
+                        style={{
+                          width: "auto",
+                          height: "22px",
+                          paddingBottom: "5px",
+                        }}
+                      >
+                       <span style={{fontWeight: '500'}}>Feedback: </span>{feedbackOpinion}
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
