@@ -80,12 +80,17 @@ export default function HomePage() {
   let [openChat, setOpenChat] = useState(false);
   let [time, setTime] = useState("");
   let [chat, setChat] = useState([]);
+  let [openFeedbackBox, setOpenFeedbackBox] = useState(false);
 
   let chatRef = useRef();
 
   useEffect(() => {
     let handleClickOutside = (e) => {
-      if (chatRef.current && !chatRef.current.contains(e.target)) {
+      if (
+        !openFeedbackBox &&
+        chatRef.current &&
+        !chatRef.current.contains(e.target)
+      ) {
         setOpenChat(false);
         setTime("");
         setChat([]);
@@ -95,7 +100,7 @@ export default function HomePage() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [openFeedbackBox]);
 
   return (
     <Grid
@@ -214,7 +219,13 @@ export default function HomePage() {
             ref={chatRef}
             style={{ overflowY: "auto" }}
           >
-            <Conversation dummyData={dummyData} time={time} chat={chat} />
+            <Conversation
+              dummyData={dummyData}
+              time={time}
+              chat={chat}
+              openFeedbackBox={openFeedbackBox}
+              setOpenFeedbackBox={setOpenFeedbackBox}
+            />
             <div className="inputContainer">
               {/* <-------------------input------------------> */}
               <InputBar

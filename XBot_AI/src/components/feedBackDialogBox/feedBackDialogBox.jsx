@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -8,84 +8,108 @@ import DialogTitle from "@mui/material/DialogTitle";
 import bulbImg from "../../assets/bulbImg.png";
 import X from "../../assets/X.png";
 
-export default function AlertDialog() {
-  const [open, setOpen] = React.useState(false);
+export default function FeedBackDialogBox({
+  openFeedbackBox,
+  setOpenFeedbackBox,
+  feedbackOpinion,
+  setFeedbackOpinion,
+}) {
+  // let [feedbackOpinion, setFeedbackOpinion] = useState('');
+  // let [comment, setComment] = useState('');
+  // const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
   const handleClose = () => {
-    setOpen(false);
+    setOpenFeedbackBox(false);
   };
 
   let handleSubmit = () => {};
 
+  let handleChange = (e) => {
+    let text = e.target.value;
+    setFeedbackOpinion(text);
+  };
+
   return (
-    <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        sx={{ width: "755px", height: "335px", borderRadius: "10px" }}
-      >
-        <DialogTitle
-          id="alert-dialog-title"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <img src={bulbImg} alt="idea" />
-          Provide Additional Feedback
-          <img src={X} alt="close" />
-        </DialogTitle>
-        <DialogContent
-          sx={{
-            overflowX: "hidden",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "80%",
-            padding: "unset",
-            width: "90%",
-            margin: "auto",
-          }}
-        >
-          <DialogContentText
-            id="alert-dialog-description"
-            sx={{
-              //   width: "715px",
-              //   height: "80%",
-              border: "1px solid #00000073",
-              borderRadius: "10px",
-              width: "100%",
-              padding: "10px",
+    <div>
+      {openFeedbackBox && (
+        <div>
+         
+          <Dialog
+            open={openFeedbackBox}
+            onClose={(event, reason) => {
+              if (reason === "backdropClick" || reason === "escapeKeyDown") {
+                // do nothing – prevent close
+                return;
+              }
+              handleClose(); // only close on manual actions
             }}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            sx={{ width: "100vw", height: "100vh", borderRadius: "10px",
+              '& .MuiDialog-paper': {
+                height: '300px', width: '700px', overflow: 'hidden', maxHeight: 'unset', maxWidth: 'unset',
+              }
+             }}
           >
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleSubmit}
-            style={{
-              backgroundColor: "#D7C7F4",
-              width: "95px",
-              height: "40px",
-              color: "black",
-            }}
-          >
-            Submit
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
+            <div
+              style={{ width: "700px", height: "300px", overflow: "hidden" }}
+            >
+              <DialogTitle
+                id="alert-dialog-title"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <img src={bulbImg} alt="idea" />
+                Provide Additional Feedback
+                <img src={X} alt="close" onClick={handleClose} style={{cursor: 'pointer'}}/>
+              </DialogTitle>
+              <DialogContent
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <textarea
+                  value={feedbackOpinion}
+                  onChange={handleChange}
+                  placeholder="Type your feedback here..."
+                  style={{
+                    width: "95%",
+                    height: "100px",
+                    padding: "10px",
+                    borderRadius: "8px",
+                    border: "1px solid #ccc",
+                    resize: "none",
+                    fontSize: "16px",
+                  }}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={handleSubmit}
+                  style={{
+                    backgroundColor: "#D7C7F4",
+                    width: "95px",
+                    height: "40px",
+                    color: "black",
+                    marginRight: "25px",
+                  }}
+                >
+                  Submit
+                </Button>
+              </DialogActions>
+            </div>
+          </Dialog>
+        </div>
+      )}
+    </div>
   );
 }
