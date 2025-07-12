@@ -9,39 +9,39 @@ import bulbImg from "../../assets/bulbImg.png";
 import X from "../../assets/X.png";
 
 export default function FeedBackDialogBox({
-  openFeedbackBox,
-  setOpenFeedbackBox,
+  // openFeedbackBox,
+  // setOpenFeedbackBox,
+  openFeedbackBoxIndex,
+  setOpenFeedbackBoxIndex,
   feedbackOpinion,
   setFeedbackOpinion,
+  // selectedIndex,
 }) {
-  // let [feedbackOpinion, setFeedbackOpinion] = useState('');
-  // let [comment, setComment] = useState('');
-  // const [open, setOpen] = useState(false);
-
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
+  
 
   const handleClose = () => {
-    setOpenFeedbackBox(false);
+    setOpenFeedbackBoxIndex(null);
   };
 
   let handleSubmit = () => {
-    setOpenFeedbackBox(false);
+    setOpenFeedbackBoxIndex(null);
   };
   
-  let handleChange = (e) => {
+   let handleChange = (e) => {
     let text = e.target.value;
-    setFeedbackOpinion(text);
+    setFeedbackOpinion((prev) => ({
+      ...prev,
+      [openFeedbackBoxIndex]: text,
+    }));
   };
 
   return (
     <div>
-      {openFeedbackBox && (
+      {openFeedbackBoxIndex && (
         <div>
          
           <Dialog
-            open={openFeedbackBox}
+            open={openFeedbackBoxIndex}
             onClose={(event, reason) => {
               if (reason === "backdropClick" || reason === "escapeKeyDown") {
                 // do nothing – prevent close
@@ -80,7 +80,7 @@ export default function FeedBackDialogBox({
                 }}
               >
                 <textarea
-                  value={feedbackOpinion}
+                  value={feedbackOpinion[openFeedbackBoxIndex] || ''}
                   onChange={handleChange}
                   placeholder="Type your feedback here..."
                   style={{

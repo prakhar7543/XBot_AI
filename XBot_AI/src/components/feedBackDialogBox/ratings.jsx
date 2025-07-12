@@ -3,8 +3,9 @@ import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 
-export default function FeedbackRating() {
-  const [value, setValue] = React.useState(0); 
+export default function FeedbackRating({rating, setRating}) {
+  // let [value, setValue] = React.useState(0); 
+
 
 
   return (
@@ -12,9 +13,9 @@ export default function FeedbackRating() {
       {/* <Typography component="legend">Controlled</Typography> */}
       <Rating
         name="simple-controlled"
-        value={value}
+        value={rating}
         onChange={(event, newValue) => {
-          setValue(newValue);
+          setRating(newValue);
         }}
       />
     </Box>

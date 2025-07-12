@@ -3,10 +3,15 @@ import "./inputBar.css";
 
 export default function InputBar({
   setOpenChat,
+  time,
   setTime,
   chat,
   setChat,
   dummyData,
+  feedback,
+  rating,
+  feedbackOpinion,
+  setSavedChats,
 }) {
   let [text, setText] = useState("");
 
@@ -35,7 +40,7 @@ export default function InputBar({
       let updated = [...chat, { sender: "You", text: text.trim(), time: time }];
 
       let found = dummyData.find((item) => {
-       return text.toLowerCase().includes(item.question.toLowerCase());
+        return text.toLowerCase().includes(item.question.toLowerCase());
       });
 
       if (found) {
@@ -53,12 +58,47 @@ export default function InputBar({
     }
   };
 
+  let handleSave = () => {
+    let data = {
+      chat,
+      time,
+      feedback,
+      rating,
+      feedbackOpinion,
+    };
+
+    let existing = [];
+
+    try {
+      let saved = JSON.parse(localStorage.getItem('chatData'));
+      if(Array.isArray(saved)){
+        existing = saved;
+      }
+    } catch (error) {
+      console.error("Error parsing chatData from localStorage", error);
+    }
+
+    existing.push(data);
+    localStorage.setItem('chatData', JSON.stringify(existing));
+    setSavedChats(existing);
+    alert("Data saved to localStorage!"); 
+  };
+
   return (
     <div className="inpContainer">
-      <input type="text" placeholder="" value={text} onChange={handleChange} />
+      <input
+        type="text"
+        placeholder="Message Bot AI…"
+        value={text}
+        onChange={handleChange}
+      />
       <div className="btn">
-        <button onClick={handleOpenChat}>Ask</button>
-        <button>Save</button>
+        <button type="submit" onClick={handleOpenChat}>
+          Ask
+        </button>
+        <button type="button" onClick={handleSave}>
+          Save
+        </button>
       </div>
     </div>
   );

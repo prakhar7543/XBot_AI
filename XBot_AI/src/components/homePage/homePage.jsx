@@ -80,14 +80,25 @@ export default function HomePage() {
   let [openChat, setOpenChat] = useState(false);
   let [time, setTime] = useState("");
   let [chat, setChat] = useState([]);
-  let [openFeedbackBox, setOpenFeedbackBox] = useState(false);
+  // let [openFeedbackBox, setOpenFeedbackBox] = useState(false);
+  let [openFeedbackBoxIndex, setOpenFeedbackBoxIndex] = useState(null);
+  let [rating, setRating] = useState({});
+  let [feedback, setFeedback] = useState({});
+  let [feedbackOpinion, setFeedbackOpinion] = useState({});
+  let [activeChat, setActiveChat] = useState(null);
+  let [savedChats, setSavedChats] = useState([]);
 
   let chatRef = useRef();
 
   useEffect(() => {
+    let storedData = JSON.parse(localStorage.getItem('chatData')) || [];
+    setSavedChats(storedData);
+  }, []);
+
+  useEffect(() => {
     let handleClickOutside = (e) => {
       if (
-        !openFeedbackBox &&
+        !openFeedbackBoxIndex &&
         chatRef.current &&
         !chatRef.current.contains(e.target)
       ) {
@@ -100,7 +111,63 @@ export default function HomePage() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [openFeedbackBox]);
+  }, [openFeedbackBoxIndex]);
+
+  function HomeContent({
+    setOpenChat,
+    setTime,
+    chat,
+    setChat,
+    dummyData,
+    time,
+    rating,
+  }) {
+    return (
+      <div className="content">
+        <div className="header">
+          <p
+            style={{
+              fontSize: "28px",
+              fontWeight: "500",
+              marginBottom: "0px",
+            }}
+          >
+            How Can I Help You Today?
+          </p>
+          <div style={{ width: "65px", height: "69px" }}>
+            <img
+              src={mainBarImg}
+              alt="ico"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+                objectPosition: "center",
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="cardContent">
+          {/* <-----------------------cards--------------------------> */}
+          <Cards />
+        </div>
+
+        <div className="inputContainer">
+          {/* <-------------------input------------------> */}
+          <InputBar
+            setOpenChat={setOpenChat}
+            setTime={setTime}
+            chat={chat}
+            setChat={setChat}
+            dummyData={dummyData}
+            time={time}
+            rating={rating}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Grid
@@ -112,7 +179,7 @@ export default function HomePage() {
         flexDirection: "column",
       }}
     >
-      {/* <------------sidebar---------------> */}
+      {/* Sidebar */}
       <Grid
         item
         xs={0}
@@ -130,34 +197,27 @@ export default function HomePage() {
             <img
               src={sideNavBarImg}
               alt="icon"
-              style={{
-                objectFit: "contain",
-                objectPosition: "center",
-                height: "100%",
-                width: "100%",
-              }}
+              style={{ width: "100%", height: "100%", objectFit: "contain" }}
             />
           </div>
-
           <p style={{ fontSize: "x-large", fontWeight: "500" }}>New Chat</p>
           <div style={{ width: "35px", height: "30px", paddingRight: "8px" }}>
             <img
               src={edit}
               alt="edit"
               style={{
-                objectFit: "contain",
-                objectPosition: "center",
-                height: "100%",
                 width: "100%",
+                height: "100%",
+                objectFit: "contain",
                 cursor: "pointer",
               }}
             />
           </div>
         </div>
-        <PastConversation />
+        <PastConversation setActiveChat={setActiveChat} savedChats={savedChats} />
       </Grid>
 
-      {/* <----------------mainbar-----------------> */}
+      {/* Main Panel */}
       <Grid
         item
         xs={12}
@@ -166,54 +226,49 @@ export default function HomePage() {
         sx={{
           background: "linear-gradient(to bottom, #e9ddf7, #f1ecec)",
           height: "100vh",
-          width: { xs: "100vw", md: "75vw", lg: "75vw" },
-          // background: {xs: 'linear-gradient(to bottom, #e9ddf7, #f1ecec)'}
+          width: { xs: "100vw", md: "75vw" },
         }}
       >
-        <Navbar />
-        {!openChat ? (
-          <div className="content">
-            <div className="header">
-              <p
-                style={{
-                  fontSize: "28px",
-                  fontWeight: "500",
-                  marginBottom: "0px",
-                }}
-              >
-                How Can I Help You Today?
-              </p>
-              <div style={{ width: "65px", height: "69px" }}>
-                <img
-                  src={mainBarImg}
-                  alt="ico"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "contain",
-                    objectPosition: "center",
-                  }}
-                />
-              </div>
-            </div>
+        <Navbar goToHomePage={() => {
+          setActiveChat(null);
+          setChat([]);
+          setOpenChat(false);
+          setTime('');
+        }} />
 
-            <div className="cardContent">
-              {/* <-----------------------cards--------------------------> */}
-              <Cards />
-            </div>
-
-            <div className="inputContainer">
-              {/* <-------------------input------------------> */}
-              <InputBar
-                setOpenChat={setOpenChat}
-                setTime={setTime}
-                chat={chat}
-                setChat={setChat}
-                dummyData={dummyData}
-              />
-            </div>
+        {/* CONDITIONAL RENDERING LOGIC */}
+        {activeChat ? (
+          // Show past chat
+          <div
+            className="parentConversationContainer"
+            ref={chatRef}
+            style={{ overflowY: "auto" }}
+          >
+            <Conversation
+              dummyData={dummyData}
+              chat={activeChat.chat}
+              time={activeChat.time}
+              feedback={activeChat.feedback}
+              rating={activeChat.rating}
+              feedbackOpinion={activeChat.feedbackOpinion}
+              openFeedbackBoxIndex={openFeedbackBoxIndex}
+              setOpenFeedbackBoxIndex={setOpenFeedbackBoxIndex}
+            />
+            
           </div>
+        ) : !openChat ? (
+          // Show homepage
+          <HomeContent
+            setOpenChat={setOpenChat}
+            setTime={setTime}
+            chat={chat}
+            setChat={setChat}
+            dummyData={dummyData}
+            time={time}
+            rating={rating}
+          />
         ) : (
+          // Show ongoing chat
           <div
             className="parentConversationContainer"
             ref={chatRef}
@@ -223,17 +278,27 @@ export default function HomePage() {
               dummyData={dummyData}
               time={time}
               chat={chat}
-              openFeedbackBox={openFeedbackBox}
-              setOpenFeedbackBox={setOpenFeedbackBox}
+              openFeedbackBoxIndex={openFeedbackBoxIndex}
+              setOpenFeedbackBoxIndex={setOpenFeedbackBoxIndex}
+              rating={rating}
+              setRating={setRating}
+              feedback={feedback}
+              setFeedback={setFeedback}
+              feedbackOpinion={feedbackOpinion}
+              setFeedbackOpinion={setFeedbackOpinion}
             />
             <div className="inputContainer">
-              {/* <-------------------input------------------> */}
               <InputBar
                 setOpenChat={setOpenChat}
+                time={time}
                 setTime={setTime}
                 chat={chat}
                 setChat={setChat}
                 dummyData={dummyData}
+                feedback={feedback}
+                rating={rating}
+                feedbackOpinion={feedbackOpinion}
+                setSavedChats={setSavedChats}
               />
             </div>
           </div>

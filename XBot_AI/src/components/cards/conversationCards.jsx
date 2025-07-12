@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef,  } from "react";
 import "./conversationCards.css";
 import userPic from "../../assets/userPic.png";
 // import sideNavbarImg from "../../assets/sideNavbarImg.png";
@@ -11,12 +11,17 @@ import FeedbackRating from "../feedBackDialogBox/ratings";
 export default function Conversation({
   time,
   chat,
-  openFeedbackBox,
-  setOpenFeedbackBox,
+  openFeedbackBoxIndex,
+  setOpenFeedbackBoxIndex,
+  rating,
+  setRating,
+  feedback,
+  setFeedback,
+  feedbackOpinion,
+  setFeedbackOpinion,
 }) {
-  // let [openFeedbackBox, setOpenFeedbackBox] = useState(false);
-  let [feedback, setFeedback] = useState({});
-  let [feedbackOpinion, setFeedbackOpinion] = useState("");
+  // let [feedback, setFeedback] = useState({});
+  // let [feedbackOpinion, setFeedbackOpinion] = useState({});
 
   let endRef = useRef();
 
@@ -32,7 +37,8 @@ export default function Conversation({
         return { ...prev, [index]: "down" };
       }
     });
-    setOpenFeedbackBox(true);
+    // setSelectedIndex(index)
+    setOpenFeedbackBoxIndex(index);
   };
 
   let handleThumbsUpClick = (index) => {
@@ -43,6 +49,13 @@ export default function Conversation({
         return { ...prev, [index]: "up" };
       }
     });
+  };
+
+  let handleRating = (index, val) => {
+    setRating((prev) => ({
+      ...prev,
+      [index]: val,
+    }));
   };
 
   return (
@@ -59,10 +72,10 @@ export default function Conversation({
 
             <div className="chat">
               <div style={{ paddingTop: "10px" }}>
-                <p style={{ fontWeight: "600", fontSize: "18px" }}>
+                <span style={{ fontWeight: "600", fontSize: "18px" }}>
                   {msg.sender}
-                </p>
-                <p>{msg.text}</p>
+                </span>
+                <p style={{paddingRight: '10px'}}>{msg.text}</p>
               </div>
 
               <div className="timeThumbs">
@@ -71,7 +84,7 @@ export default function Conversation({
                 </p>
 
                 {msg.sender !== "You" &&
-                  (!feedbackOpinion ? (
+                  (!feedbackOpinion[index] ? (
                     <div
                       className="thumbsUp"
                       style={{ height: "16px", width: "43px" }}
@@ -102,14 +115,16 @@ export default function Conversation({
                         height: "80px",
                         display: "flex",
                         justifyContent: "end",
-                        flexDirection: 'column' ,
+                        flexDirection: "column",
                       }}
                     >
-                      <div>
+                      <div style={{ width: "70px", height: "70px", display: 'flex', alignItems: 'end' }}>
                         <FeedbackRating
-                          style={{ width: "70px", height: "70px" }}
+                          rating={rating[index] || 0}
+                          setRating={(val) => handleRating(index, val)}
                         />
                       </div>
+
                       <div
                         className="comments"
                         style={{
@@ -118,7 +133,8 @@ export default function Conversation({
                           paddingBottom: "5px",
                         }}
                       >
-                       <span style={{fontWeight: '500'}}>Feedback: </span>{feedbackOpinion}
+                        <span style={{ fontWeight: "500" }}>Feedback: </span>
+                        {feedbackOpinion[index]}
                       </div>
                     </div>
                   ))}
@@ -130,10 +146,10 @@ export default function Conversation({
       </div>
 
       <div className="feedback">
-        {openFeedbackBox && (
+        {openFeedbackBoxIndex && (
           <FeedBackDialogBox
-            openFeedbackBox={openFeedbackBox}
-            setOpenFeedbackBox={setOpenFeedbackBox}
+            openFeedbackBoxIndex={openFeedbackBoxIndex}
+            setOpenFeedbackBoxIndex={setOpenFeedbackBoxIndex}
             feedbackOpinion={feedbackOpinion}
             setFeedbackOpinion={setFeedbackOpinion}
           />
