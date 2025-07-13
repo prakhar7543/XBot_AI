@@ -54,8 +54,14 @@ export default function InputBar({
       }
 
       setChat(updated);
+      
+       setTimeout(() => {
       setText("");
+    }, 100); // 100ms is enough to avoid the race condition
+  
     }
+
+
   };
 
   let handleSave = () => {

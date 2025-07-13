@@ -7,9 +7,14 @@ import edit from "../../assets/edit.png";
 import PastConversation from "../cards/pastChats";
 import Conversation from "../cards/conversationCards";
 
+// ✅ Utility to read query params like ?index=0
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 export default function HistoryPage() {
-  const location = useLocation();
-  const index = location.state?.index;
+  const query = useQuery();
+  const index = parseInt(query.get("index"), 10); // ✅ Get index from URL
 
   const [chatData, setChatData] = useState(null);
   const [savedChats, setSavedChats] = useState([]);
@@ -17,7 +22,7 @@ export default function HistoryPage() {
   useEffect(() => {
     const storedChats = JSON.parse(localStorage.getItem("chatData")) || [];
     setSavedChats(storedChats);
-    if (typeof index === "number" && storedChats[index]) {
+    if (!isNaN(index) && storedChats[index]) {
       setChatData(storedChats[index]);
     }
   }, [index]);
@@ -54,13 +59,14 @@ export default function HistoryPage() {
               style={{ width: "100%", height: "100%", objectFit: "contain" }}
             />
           </div>
-          <a href="/" style={{ textDecoration: "none" }}>
-  <p style={{ fontSize: "x-large", fontWeight: "500", color: 'black' }}>
-    New Chat
-  </p>
-</a>
 
-          {/* <p style={{ fontSize: "x-large", fontWeight: "500" }}>New Chat</p> */}
+          {/* Home navigation */}
+          <a href="/" style={{ textDecoration: "none" }}>
+            <p style={{ fontSize: "x-large", fontWeight: "500", color: "black" }}>
+              New Chat
+            </p>
+          </a>
+
           <div style={{ width: "35px", height: "30px", paddingRight: "8px" }}>
             <img
               src={edit}
@@ -74,10 +80,11 @@ export default function HistoryPage() {
             />
           </div>
         </div>
+
         <PastConversation savedChats={savedChats} />
       </Grid>
 
-      {/* Main Panel */}
+      {/* Main Chat Area */}
       <Grid
         item
         xs={12}
@@ -91,7 +98,6 @@ export default function HistoryPage() {
       >
         <Navbar />
 
-        {/* Past Chat Conversation Only */}
         <div
           className="parentConversationContainer"
           style={{ overflowY: "auto" }}
@@ -110,48 +116,3 @@ export default function HistoryPage() {
     </Grid>
   );
 }
-
-
-
-// import React, { useEffect, useState } from "react";
-// import { useLocation } from "react-router-dom";
-// import Navbar from "../navbar/navbar";
-// import Conversation from "../cards/conversationCards";
-
-// export default function HistoryPage() {
-//   const location = useLocation();
-//   const index = location.state?.index;
-
-//   const [chatData, setChatData] = useState(null);
-
-//   useEffect(() => {
-//     const savedChats = JSON.parse(localStorage.getItem("chatData")) || [];
-//     if (typeof index === "number" && savedChats[index]) {
-//       setChatData(savedChats[index]);
-//     }
-//   }, [index]);
-
-//   if (!chatData) {
-//     return (
-//       <>
-//         <Navbar />
-//         <p>No conversation found.</p>
-//       </>
-//     );
-//   }
-
-//   return (
-//     <>
-//       <Navbar />
-//       <Conversation
-//         chat={chatData.chat}
-//         time={chatData.time}
-//         feedback={chatData.feedback}
-//         rating={chatData.rating}
-//         feedbackOpinion={chatData.feedbackOpinion}
-//         openFeedbackBoxIndex={null}
-//         setOpenFeedbackBoxIndex={() => {}}
-//       />
-//     </>
-//   );
-// }

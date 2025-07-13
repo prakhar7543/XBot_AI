@@ -1,41 +1,39 @@
-import { useNavigate } from "react-router-dom";
-import './pastChats.css';
+// import { useNavigate } from "react-router-dom";
+import "./pastChats.css";
 
 export default function PastConversation({ savedChats }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const handleClick = (index) => {
-    // 👇 Just pass index in navigation
-    navigate("/history", { state: { index } });
-  };
+  // const handleClick = (index) => {
+  //   // 👇 Just pass index in navigation
+  //   navigate("/history", { state: { index } });
+  // };
 
   return (
     <div className="pastConversationContainer">
       {savedChats &&
         savedChats.map((item, index) => (
-           <a
-      key={index}
-      href="/history"
-      style={{ textDecoration: "none" }}
-      data-testid={`past-chat-${index}`}
-    >
-      <div
-        className="pastConversationCard"
-        style={{ cursor: "pointer" }}
-      >
-        <p>Past Conversations</p>
-      </div>
-    </a>
-          // <div
-          //   className="pastConversationCard"
+          <a
+            key={index}
+            href={`/history?index=${index}`}
+            data-testid={`past-chat-${index}`}
+            style={{ textDecoration: "none" }}
+          >
+            <div className="pastConversationCard" style={{ cursor: "pointer" }}>
+              <p>Past Conversations</p>
+            </div>
+          </a>
+
+          // <a
           //   key={index}
-          //   onClick={() => handleClick(index)}
-          //   style={{ cursor: "pointer" }}
+          //   href="/history"
+          //   style={{ textDecoration: "none" }}
+          //   data-testid={`past-chat-${index}`}
           // >
-          //   <p style={{ pointerEvents: "all", cursor: "pointer" }}>
-          //     Past Conversations
-          //   </p>
-          // </div>
+          //   <div className="pastConversationCard" style={{ cursor: "pointer" }}>
+          //     <p>Past Conversations</p>
+          //   </div>
+          // </a>
         ))}
     </div>
   );
