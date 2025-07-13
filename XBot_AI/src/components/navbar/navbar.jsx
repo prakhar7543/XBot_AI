@@ -1,3 +1,33 @@
+// Navbar.jsx
+import React from "react";
+import "./navbar.css";
+import menuBar from "../../assets/menuBar.png";
+
+export default function Navbar() {
+  return (
+    <header className="container" style={{ display: "flex" }}>
+      <div
+        className="menuIcon"
+        style={{
+          display: "none",
+          width: "23px",
+          height: "15px",
+        }}
+      >
+        <img src={menuBar} alt="menu" />
+      </div>
+      <a href="/" style={{ textDecoration: "none", color: "#9785BA" }}>
+        <h1 style={{ marginTop: "2px", paddingLeft: "10px", cursor: "pointer", marginBottom: "15px" }}>
+          Bot AI
+        </h1>
+      </a>
+    </header>
+  );
+}
+
+
+
+/*
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./navbar.css";
@@ -34,3 +64,4 @@ export default function Navbar() {
     </div>
   );
 }
+*/

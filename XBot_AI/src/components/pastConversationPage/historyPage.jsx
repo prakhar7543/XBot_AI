@@ -54,7 +54,13 @@ export default function HistoryPage() {
               style={{ width: "100%", height: "100%", objectFit: "contain" }}
             />
           </div>
-          <p style={{ fontSize: "x-large", fontWeight: "500" }}>New Chat</p>
+          <a href="/" style={{ textDecoration: "none" }}>
+  <p style={{ fontSize: "x-large", fontWeight: "500", color: 'black' }}>
+    New Chat
+  </p>
+</a>
+
+          {/* <p style={{ fontSize: "x-large", fontWeight: "500" }}>New Chat</p> */}
           <div style={{ width: "35px", height: "30px", paddingRight: "8px" }}>
             <img
               src={edit}

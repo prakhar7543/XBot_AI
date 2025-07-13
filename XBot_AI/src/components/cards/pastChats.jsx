@@ -13,16 +13,29 @@ export default function PastConversation({ savedChats }) {
     <div className="pastConversationContainer">
       {savedChats &&
         savedChats.map((item, index) => (
-          <div
-            className="pastConversationCard"
-            key={index}
-            onClick={() => handleClick(index)}
-            style={{ cursor: "pointer" }}
-          >
-            <p style={{ pointerEvents: "all", cursor: "pointer" }}>
-              Past Conversations
-            </p>
-          </div>
+           <a
+      key={index}
+      href="/history"
+      style={{ textDecoration: "none" }}
+      data-testid={`past-chat-${index}`}
+    >
+      <div
+        className="pastConversationCard"
+        style={{ cursor: "pointer" }}
+      >
+        <p>Past Conversations</p>
+      </div>
+    </a>
+          // <div
+          //   className="pastConversationCard"
+          //   key={index}
+          //   onClick={() => handleClick(index)}
+          //   style={{ cursor: "pointer" }}
+          // >
+          //   <p style={{ pointerEvents: "all", cursor: "pointer" }}>
+          //     Past Conversations
+          //   </p>
+          // </div>
         ))}
     </div>
   );

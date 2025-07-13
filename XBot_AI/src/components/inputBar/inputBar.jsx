@@ -94,13 +94,16 @@ export default function InputBar({
         style={{display: 'flex'}}
       >
         <input
-          type="text"
-          placeholder="Message Bot AI..."
-          value={text}
-          onChange={handleChange}
-        />
+  data-testid="chat-input"
+  type="text"
+  placeholder="Message Bot AI..."
+  value={text}
+  onChange={handleChange}
+/>
+
         <div className="btn">
-          <button type="submit">Ask</button>
+          <button type="submit" data-testid="submit-button">Ask</button>
+
           <button type="button" onClick={handleSave}>
             Save
           </button>
