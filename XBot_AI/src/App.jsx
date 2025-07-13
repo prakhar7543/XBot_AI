@@ -1,12 +1,15 @@
 import "./App.css";
 import HomePage from "./components/homePage/homePage";
-import AlertDialog from "./components/feedBackDialogBox/feedBackDialogBox";
+import HistoryPage from "./components/pastConversationPage/historyPage";
+import { Routes, Route } from "react-router-dom";  // ✅ Only import Routes & Route
 
 function App() {
-  return <div>
-    <HomePage />
-    {/* <AlertDialog /> */}
-  </div>;
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/history" element={<HistoryPage />} />
+    </Routes>
+  );
 }
 
 export default App;

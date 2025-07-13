@@ -1,5 +1,5 @@
 .card {
-  height: 65px;
+  height: 75px;
   width: 515px;
   background-color: white;
   border: 1px solid lightgrey;
@@ -13,10 +13,12 @@
 
 .card h2 {
   margin-bottom: 0px;
+  padding-left: 10px;
 }
 
 .card p {
   color: #00000080;
+  padding-left: 10px;
 }
 
 .cardContainer {
@@ -35,7 +37,7 @@
 }
 
 .cardContent {
-  margin-top: 55px;
+  margin-top: 45px;
 }
 
 

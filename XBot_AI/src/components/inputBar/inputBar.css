@@ -30,6 +30,7 @@ button {
   justify-content: space-around;
   align-items: center;
   width: 130px;
+  padding-left: 10px;
 }
 
 .btn button {

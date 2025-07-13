@@ -70,8 +70,8 @@ export default function InputBar({
     let existing = [];
 
     try {
-      let saved = JSON.parse(localStorage.getItem('chatData'));
-      if(Array.isArray(saved)){
+      let saved = JSON.parse(localStorage.getItem("chatData"));
+      if (Array.isArray(saved)) {
         existing = saved;
       }
     } catch (error) {
@@ -79,27 +79,33 @@ export default function InputBar({
     }
 
     existing.push(data);
-    localStorage.setItem('chatData', JSON.stringify(existing));
+    localStorage.setItem("chatData", JSON.stringify(existing));
     setSavedChats(existing);
-    alert("Data saved to localStorage!"); 
+    alert("Data saved to localStorage!");
   };
 
   return (
     <div className="inpContainer">
-      <input
-        type="text"
-        placeholder="Message Bot AI…"
-        value={text}
-        onChange={handleChange}
-      />
-      <div className="btn">
-        <button type="submit" onClick={handleOpenChat}>
-          Ask
-        </button>
-        <button type="button" onClick={handleSave}>
-          Save
-        </button>
-      </div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleOpenChat();
+        }}
+        style={{display: 'flex'}}
+      >
+        <input
+          type="text"
+          placeholder="Message Bot AI..."
+          value={text}
+          onChange={handleChange}
+        />
+        <div className="btn">
+          <button type="submit">Ask</button>
+          <button type="button" onClick={handleSave}>
+            Save
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
