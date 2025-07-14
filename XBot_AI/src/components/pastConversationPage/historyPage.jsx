@@ -159,7 +159,7 @@ export default function HistoryPage() {
           ))
         )}
 
-        <div className="inputContainer" style={{ padding: "10px 20px" }}>
+        {/* <div className="inputContainer" style={{ padding: "10px 20px" }}>
           <InputBar
             setOpenChat={() => {}}
             setTime={() => {}}
@@ -172,7 +172,7 @@ export default function HistoryPage() {
             feedbackOpinion={{}}
             setSavedChats={() => {}}
           />
-        </div>
+        </div> */}
       </Grid>
     </Grid>
   );
