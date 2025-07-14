@@ -211,6 +211,7 @@ export default function HomePage() {
           backgroundColor: "white",
           height: "100vh",
           display: { xs: "none", md: "block" },
+          width: "25vw",
         }}
       >
         <div className="sideNavbar">
@@ -246,6 +247,7 @@ export default function HomePage() {
         sx={{
           background: "linear-gradient(to bottom, #e9ddf7, #f1ecec)",
           height: "100vh",
+          width: { xs: "100vw", md: "75vw" },
         }}
       >
         <Navbar
