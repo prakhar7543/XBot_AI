@@ -124,6 +124,36 @@ export default function HomePage() {
     };
   }, [openFeedbackBoxIndex]);
 
+  function getCurrentTime() {
+    let now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+
+    let formattedTime = `${hours % 12 || 12}:${minutes
+      .toString()
+      .padStart(2, "0")} ${hours >= 12 ? "PM" : "AM"}`;
+    return formattedTime;
+  }
+
+  const handleCardClick = (question) => {
+  setChat((prev) => [
+    ...prev,
+    { sender: "You", text: question, time: getCurrentTime() },
+  ]);
+
+  const matched = dummyData.find((item) => item.question === question);
+  const botReply = matched
+    ? matched.response
+    : "Sorry, Did not understand your query!";
+
+  setChat((prev) => [
+    ...prev,
+    { sender: "You", text: question, time: getCurrentTime() },
+    { sender: "Soul AI", text: botReply, time: getCurrentTime() },
+  ]);
+};
+
+
   function HomeContent({
     setOpenChat,
     setTime,
@@ -161,7 +191,7 @@ export default function HomePage() {
 
         <div className="cardContent">
           {/* <-----------------------cards--------------------------> */}
-          <Cards />
+          <Cards handleCardClick={handleCardClick} />
         </div>
 
         <div className="inputContainer">
