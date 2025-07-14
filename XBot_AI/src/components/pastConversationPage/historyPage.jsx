@@ -1,5 +1,5 @@
 // src/components/pastConversationPage/historyPage.jsx
-
+import InputBar from "../inputBar/inputBar";
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Navbar from "../navbar/navbar";
@@ -158,6 +158,21 @@ export default function HistoryPage() {
             </div>
           ))
         )}
+
+        <div className="inputContainer" style={{ padding: "10px 20px" }}>
+          <InputBar
+            setOpenChat={() => {}}
+            setTime={() => {}}
+            chat={[]}
+            setChat={() => {}}
+            dummyData={[]}
+            time=""
+            rating={{}}
+            feedback={{}}
+            feedbackOpinion={{}}
+            setSavedChats={() => {}}
+          />
+        </div>
       </Grid>
     </Grid>
   );
