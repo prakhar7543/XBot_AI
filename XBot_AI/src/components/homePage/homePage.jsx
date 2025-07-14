@@ -135,23 +135,23 @@ export default function HomePage() {
     return formattedTime;
   }
 
-  const handleCardClick = (question) => {
-  setChat((prev) => [
-    ...prev,
-    { sender: "You", text: question, time: getCurrentTime() },
-  ]);
+ const handleCardClick = (question) => {
+  const currentTime = getCurrentTime();
 
   const matched = dummyData.find((item) => item.question === question);
   const botReply = matched
     ? matched.response
     : "Sorry, Did not understand your query!";
 
-  setChat((prev) => [
-    ...prev,
-    { sender: "You", text: question, time: getCurrentTime() },
-    { sender: "Soul AI", text: botReply, time: getCurrentTime() },
+  setChat([
+    { sender: "You", text: question, time: currentTime },
+    { sender: "Soul AI", text: botReply, time: currentTime },
   ]);
+
+  setTime(currentTime);
+  setOpenChat(true); 
 };
+
 
 
   function HomeContent({
