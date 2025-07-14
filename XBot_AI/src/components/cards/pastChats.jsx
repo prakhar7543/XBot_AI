@@ -1,3 +1,25 @@
+// src/components/cards/pastChats.jsx
+import "./pastChats.css";
+
+export default function PastConversation() {
+  return (
+    <div className="pastConversationContainer">
+      <a
+        href="/history"
+        data-testid="past-chat-history-link"
+        style={{ textDecoration: "none" }}
+      >
+        <div className="pastConversationCard" style={{ cursor: "pointer" }}>
+          <p>Past Conversations</p>
+        </div>
+      </a>
+    </div>
+  );
+}
+
+
+
+/*
 // import { useNavigate } from "react-router-dom";
 import "./pastChats.css";
 
@@ -11,6 +33,12 @@ export default function PastConversation({ savedChats }) {
 
   return (
     <div className="pastConversationContainer">
+      <a href="/history" style={{ textDecoration: "none" }}>
+  <div className="pastConversationCard" style={{ cursor: "pointer" }}>
+    <p>Past Conversations</p>
+  </div>
+</a>
+
       {savedChats &&
         savedChats.map((item, index) => (
           <a
@@ -24,17 +52,9 @@ export default function PastConversation({ savedChats }) {
             </div>
           </a>
 
-          // <a
-          //   key={index}
-          //   href="/history"
-          //   style={{ textDecoration: "none" }}
-          //   data-testid={`past-chat-${index}`}
-          // >
-          //   <div className="pastConversationCard" style={{ cursor: "pointer" }}>
-          //     <p>Past Conversations</p>
-          //   </div>
-          // </a>
-        ))}
+         
+        ))} 
     </div>
   );
 }
+*/

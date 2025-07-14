@@ -12,6 +12,7 @@ import Cards from "../cards/cards";
 import InputBar from "../inputBar/inputBar";
 import PastConversation from "../cards/pastChats";
 import Conversation from "../cards/conversationCards";
+import { useLocation } from "react-router-dom";
 
 let dummyData = [
   {
@@ -87,8 +88,18 @@ export default function HomePage() {
   let [feedbackOpinion, setFeedbackOpinion] = useState({});
   let [activeChat, setActiveChat] = useState(null);
   let [savedChats, setSavedChats] = useState([]);
-
   let chatRef = useRef();
+  let location = useLocation();
+
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setOpenChat(false);
+      setTime("");
+      setChat([]);
+      setActiveChat(null);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     let storedData = JSON.parse(localStorage.getItem('chatData')) || [];

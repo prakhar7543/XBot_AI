@@ -19,6 +19,7 @@ export default function Conversation({
   setFeedback,
   feedbackOpinion,
   setFeedbackOpinion,
+  isHistoryPage = false,
 }) {
   // let [feedback, setFeedback] = useState({});
   // let [feedbackOpinion, setFeedbackOpinion] = useState({});
@@ -60,7 +61,9 @@ export default function Conversation({
 
   return (
     <>
-      <div className="conversationContainer">
+      <div className="conversationContainer" style={{
+        ...(isHistoryPage ? { width: "100%", height: 'auto' } : {})
+      }}>
         {chat.map((msg, index) => (
           <div key={index} className="conversationCard">
             <div className="profilePic">
