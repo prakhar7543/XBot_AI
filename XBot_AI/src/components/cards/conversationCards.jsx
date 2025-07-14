@@ -78,7 +78,7 @@ export default function Conversation({
                 <span style={{ fontWeight: "600", fontSize: "18px" }}>
                   {msg.sender}
                 </span>
-                <p style={{paddingRight: '10px'}}>{msg.text}</p>
+                <p data-testid="chat-response" style={{paddingRight: '10px'}}>{msg.text}</p>
               </div>
 
               <div className="timeThumbs">

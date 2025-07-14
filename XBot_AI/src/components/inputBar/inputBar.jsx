@@ -57,7 +57,9 @@ export default function InputBar({
       
        setTimeout(() => {
       setText("");
-    }, 100); // 100ms is enough to avoid the race condition
+    }, 200); // 100ms is enough to avoid the race condition
+
+    setTimeout(() => setText(""), 100);
   
     }
 
